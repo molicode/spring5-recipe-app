@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import molicode.springframework.converters.RecipeCommandToRecipe;
+import molicode.springframework.converters.RecipeToRecipeCommand;
 import molicode.springframework.domain.Recipe;
 import molicode.springframework.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +28,17 @@ class RecipeServiceImplTest {
   @Mock
   RecipeRepository recipeRepository;
 
+  @Mock
+  RecipeToRecipeCommand recipeToRecipeCommand;
+
+  @Mock
+  RecipeCommandToRecipe recipeCommandToRecipe;
+
   @BeforeEach
-  void setUp() {
+  public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
 
-    recipeService = new RecipeServiceImpl(recipeRepository);
+    recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
   }
 
   @Test
@@ -49,16 +57,19 @@ class RecipeServiceImplTest {
   }
 
   @Test
-  void getRecipes() {
-    Recipe recipe = new Recipe();
-    HashSet recipesData = new HashSet();
-    recipesData.add(recipe);
+  public void getRecipesTest() throws Exception {
 
-    when(recipeRepository.findAll()).thenReturn(recipesData);
+    Recipe recipe = new Recipe();
+    HashSet receipesData = new HashSet();
+    receipesData.add(recipe);
+
+    when(recipeService.getRecipes()).thenReturn(receipesData);
 
     Set<Recipe> recipes = recipeService.getRecipes();
 
     assertEquals(recipes.size(), 1);
     verify(recipeRepository, times(1)).findAll();
+    verify(recipeRepository, never()).findById(anyLong());
   }
+
 }

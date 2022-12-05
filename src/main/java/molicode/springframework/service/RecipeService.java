@@ -2,6 +2,7 @@ package molicode.springframework.service;
 
 import java.util.Set;
 
+import molicode.springframework.commands.RecipeCommand;
 import molicode.springframework.domain.Recipe;
 
 public interface RecipeService {
@@ -10,4 +11,5 @@ public interface RecipeService {
 
   Recipe findById(Long id);
 
+  RecipeCommand saveRecipeCommand(RecipeCommand command);
 }

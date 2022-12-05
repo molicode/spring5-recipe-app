@@ -17,15 +17,23 @@ class UnitOfMeasureRepositoryTest {
   UnitOfMeasureRepository unitOfMeasureRepository;
 
   @BeforeEach
-  void setUp() {
-
+  public void setUp() throws Exception {
   }
 
   @Test
-  void findByDescription() {
-    Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Teaspoon");
+  public void findByDescription() throws Exception {
 
-    assertEquals("Teaspoon", optionalUnitOfMeasure.get().getDescription());
+    Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+
+    assertEquals("Teaspoon", uomOptional.get().getDescription());
+  }
+
+  @Test
+  public void findByDescriptionCup() throws Exception {
+
+    Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+
+    assertEquals("Cup", uomOptional.get().getDescription());
   }
 
 }

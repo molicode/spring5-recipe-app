@@ -2,7 +2,6 @@ package molicode.springframework.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,11 +20,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-class IndexControllerTest {
+public class IndexControllerTest {
 
   @Mock
   RecipeService recipeService;
@@ -36,14 +34,14 @@ class IndexControllerTest {
   IndexController controller;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
 
     controller = new IndexController(recipeService);
   }
 
   @Test
-  void testMockMVC() throws Exception {
+  public void testMockMVC() throws Exception {
     MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
     mockMvc.perform(get("/"))
@@ -52,20 +50,19 @@ class IndexControllerTest {
   }
 
   @Test
-  void getIndexPage() {
+  public void getIndexPage() throws Exception {
 
     //given
     Set<Recipe> recipes = new HashSet<>();
+    recipes.add(new Recipe());
 
-    Recipe oneRecipe = new Recipe();
-    oneRecipe.setId(1L);
-    recipes.add(oneRecipe);
+    Recipe recipe = new Recipe();
+    recipe.setId(1L);
 
-    Recipe twoRecipe = new Recipe();
-    twoRecipe.setId(2L);
-    recipes.add(twoRecipe);
+    recipes.add(recipe);
 
     when(recipeService.getRecipes()).thenReturn(recipes);
+
     ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
     //when
@@ -78,4 +75,5 @@ class IndexControllerTest {
     Set<Recipe> setInController = argumentCaptor.getValue();
     assertEquals(2, setInController.size());
   }
+
 }

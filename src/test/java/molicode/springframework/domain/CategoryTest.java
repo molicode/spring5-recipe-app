@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CategoryTest {
+public class CategoryTest {
 
   Category category;
 
@@ -15,7 +15,7 @@ class CategoryTest {
   }
 
   @Test
-  void getId() {
+  public void getId() throws Exception {
     Long idValue = 4L;
 
     category.setId(idValue);
@@ -24,10 +24,11 @@ class CategoryTest {
   }
 
   @Test
-  void getDescription() {
+  public void getDescription() throws Exception {
   }
 
   @Test
-  void getRecipes() {
+  public void getRecipes() throws Exception {
   }
+
 }
