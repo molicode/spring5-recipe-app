@@ -1,6 +1,7 @@
 package molicode.springframework.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,4 +26,16 @@ public class RecipeServiceImpl implements RecipeService {
     recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
     return recipes;
   }
+
+  @Override
+  public Recipe findById(final Long id){
+    Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+
+    if(!recipeOptional.isPresent()){
+      throw new RuntimeException("Recipe Not Found!");
+    }
+
+    return recipeOptional.get();
+  }
+
 }
