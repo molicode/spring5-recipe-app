@@ -83,7 +83,7 @@ public class IngredientServiceImpl implements IngredientService {
         ingredientFound.setAmount(command.getAmount());
         ingredientFound.setUnitOfMeasure(unitOfMeasureRepository
             .findById(command.getUnitOfMeasure().getId())
-            .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
+            .orElseThrow(() -> new RuntimeException("UNIT OF MEASURE NOT FOUND"))); //todo address this
       } else {
         //add new Ingredient
         recipe.addIngredient(ingredientCommandToIngredient.convert(command));

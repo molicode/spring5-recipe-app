@@ -23,7 +23,7 @@ public class IngredientController {
 
   private final UnitOfMeasureService unitOfMeasureService;
 
-  public IngredientController(RecipeService recipeService, IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
+  public IngredientController(IngredientService ingredientService, RecipeService recipeService, UnitOfMeasureService unitOfMeasureService) {
     this.recipeService = recipeService;
     this.ingredientService = ingredientService;
     this.unitOfMeasureService = unitOfMeasureService;
