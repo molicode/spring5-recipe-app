@@ -20,9 +20,11 @@ import molicode.springframework.repositories.RecipeRepository;
 import molicode.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class IngredientServiceImplTest {
 
   private final IngredientToIngredientCommand ingredientToIngredientCommand;
@@ -35,9 +37,8 @@ class IngredientServiceImplTest {
   @Mock
   UnitOfMeasureRepository unitOfMeasureRepository;
 
-  IngredientService ingredientService;
+  private IngredientService ingredientService;
 
-  //init converters
   public IngredientServiceImplTest() {
     this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
     this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
@@ -45,18 +46,19 @@ class IngredientServiceImplTest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
-    ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
-        recipeRepository, unitOfMeasureRepository);
+    ingredientService = new IngredientServiceImpl(
+        ingredientToIngredientCommand,
+        ingredientCommandToIngredient,
+        unitOfMeasureRepository,
+        recipeRepository);
   }
 
   @Test
-  public void findByRecipeIdAndId() throws Exception {
+  public void findByRecipeIdAndId() {
   }
 
   @Test
-  public void findByRecipeIdAndReceipeIdHappyPath() throws Exception {
+  public void findByRecipeIdAndReceipeIdHappyPath() {
     //given
     Recipe recipe = new Recipe();
     recipe.setId(1L);
@@ -87,7 +89,7 @@ class IngredientServiceImplTest {
   }
 
   @Test
-  public void testSaveRecipeCommand() throws Exception {
+  public void testSaveRecipeCommand() {
     //given
     IngredientCommand command = new IngredientCommand();
     command.setId(3L);
@@ -113,7 +115,7 @@ class IngredientServiceImplTest {
   }
 
   @Test
-  public void testDeleteById() throws Exception {
+  public void testDeleteById() {
     //given
     Recipe recipe = new Recipe();
     Ingredient ingredient = new Ingredient();

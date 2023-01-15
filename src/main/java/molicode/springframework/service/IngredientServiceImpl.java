@@ -2,6 +2,7 @@ package molicode.springframework.service;
 
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import molicode.springframework.commands.IngredientCommand;
 import molicode.springframework.converters.IngredientCommandToIngredient;
@@ -13,8 +14,9 @@ import molicode.springframework.repositories.UnitOfMeasureRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
+@AllArgsConstructor
+@Slf4j
 public class IngredientServiceImpl implements IngredientService {
 
   private final IngredientToIngredientCommand ingredientToIngredientCommand;
@@ -24,15 +26,6 @@ public class IngredientServiceImpl implements IngredientService {
   private final UnitOfMeasureRepository unitOfMeasureRepository;
 
   private final RecipeRepository recipeRepository;
-
-  public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
-      IngredientCommandToIngredient ingredientCommandToIngredient, RecipeRepository recipeRepository,
-      UnitOfMeasureRepository unitOfMeasureRepository) {
-    this.ingredientToIngredientCommand = ingredientToIngredientCommand;
-    this.ingredientCommandToIngredient = ingredientCommandToIngredient;
-    this.unitOfMeasureRepository = unitOfMeasureRepository;
-    this.recipeRepository = recipeRepository;
-  }
 
   @Override
   public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {

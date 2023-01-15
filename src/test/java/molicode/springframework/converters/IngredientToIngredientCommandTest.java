@@ -12,8 +12,14 @@ import molicode.springframework.domain.Recipe;
 import molicode.springframework.domain.UnitOfMeasure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class IngredientToIngredientCommandTest {
+@ExtendWith(MockitoExtension.class)
+class IngredientToIngredientCommandTest {
+
+  private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
   public static final Recipe RECIPE = new Recipe();
 
@@ -25,11 +31,16 @@ public class IngredientToIngredientCommandTest {
 
   public static final Long ID_VALUE = new Long(1L);
 
+  @InjectMocks
   IngredientToIngredientCommand converter;
+
+  public IngredientToIngredientCommandTest() {
+    this.unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+  }
 
   @BeforeEach
   public void setUp() throws Exception {
-    converter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+    converter = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
   }
 
   @Test

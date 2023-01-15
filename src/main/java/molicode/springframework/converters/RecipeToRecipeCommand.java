@@ -1,5 +1,6 @@
 package molicode.springframework.converters;
 
+import lombok.AllArgsConstructor;
 import lombok.Synchronized;
 import molicode.springframework.commands.RecipeCommand;
 import molicode.springframework.domain.Category;
@@ -9,6 +10,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
 
   private final CategoryToCategoryCommand categoryConveter;
@@ -16,13 +18,6 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
   private final IngredientToIngredientCommand ingredientConverter;
 
   private final NotesToNotesCommand notesConverter;
-
-  public RecipeToRecipeCommand(CategoryToCategoryCommand categoryConveter, IngredientToIngredientCommand ingredientConverter,
-      NotesToNotesCommand notesConverter) {
-    this.categoryConveter = categoryConveter;
-    this.ingredientConverter = ingredientConverter;
-    this.notesConverter = notesConverter;
-  }
 
   @Synchronized
   @Nullable
@@ -42,6 +37,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
     command.setServings(source.getServings());
     command.setSource(source.getSource());
     command.setUrl(source.getUrl());
+    command.setImage(source.getImage());
     command.setNotes(notesConverter.convert(source.getNotes()));
 
     if (source.getCategories() != null && source.getCategories().size() > 0) {

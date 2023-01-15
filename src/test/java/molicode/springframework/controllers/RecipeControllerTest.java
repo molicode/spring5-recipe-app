@@ -16,26 +16,27 @@ import molicode.springframework.domain.Recipe;
 import molicode.springframework.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class RecipeControllerTest {
+@ExtendWith(MockitoExtension.class)
+class RecipeControllerTest {
 
   @Mock
-  RecipeService recipeService;
+  private RecipeService recipeService;
 
-  RecipeController controller;
+  @InjectMocks
+  private RecipeController controller;
 
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @BeforeEach
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
-    controller = new RecipeController(recipeService);
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
   }
 

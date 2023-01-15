@@ -20,32 +20,33 @@ import molicode.springframework.service.RecipeService;
 import molicode.springframework.service.UnitOfMeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class IngredientControllerTest {
+@ExtendWith(MockitoExtension.class)
+class IngredientControllerTest {
 
   @Mock
-  IngredientService ingredientService;
+  private IngredientService ingredientService;
 
   @Mock
-  UnitOfMeasureService unitOfMeasureService;
+  private UnitOfMeasureService unitOfMeasureService;
 
   @Mock
-  RecipeService recipeService;
+  private RecipeService recipeService;
 
-  IngredientController controller;
+  @InjectMocks
+  private IngredientController controller;
 
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @BeforeEach
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
-    controller = new IngredientController(ingredientService, recipeService, unitOfMeasureService);
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
   }
 

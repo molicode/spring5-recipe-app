@@ -16,34 +16,36 @@ import molicode.springframework.domain.Recipe;
 import molicode.springframework.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-public class IndexControllerTest {
+@ExtendWith(MockitoExtension.class)
+class IndexControllerTest {
 
   @Mock
-  RecipeService recipeService;
+  private RecipeService recipeService;
 
   @Mock
-  Model model;
+  private Model model;
 
-  IndexController controller;
+  private MockMvc mockMvc;
+
+  @InjectMocks
+  private IndexController controller;
 
   @BeforeEach
-  public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
-    controller = new IndexController(recipeService);
+  void setUp() {
+    mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
   }
 
   @Test
   public void testMockMVC() throws Exception {
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
     mockMvc.perform(get("/"))
         .andExpect(status().isOk())
         .andExpect(view().name("index"));
@@ -51,7 +53,6 @@ public class IndexControllerTest {
 
   @Test
   public void getIndexPage() throws Exception {
-
     //given
     Set<Recipe> recipes = new HashSet<>();
     recipes.add(new Recipe());

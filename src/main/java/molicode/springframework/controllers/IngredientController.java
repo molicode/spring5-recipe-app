@@ -1,5 +1,6 @@
 package molicode.springframework.controllers;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import molicode.springframework.commands.IngredientCommand;
 import molicode.springframework.commands.RecipeCommand;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Slf4j
 @Controller
+@AllArgsConstructor
+@Slf4j
 public class IngredientController {
 
   private final IngredientService ingredientService;
@@ -23,12 +25,6 @@ public class IngredientController {
   private final RecipeService recipeService;
 
   private final UnitOfMeasureService unitOfMeasureService;
-
-  public IngredientController(IngredientService ingredientService, RecipeService recipeService, UnitOfMeasureService unitOfMeasureService) {
-    this.ingredientService = ingredientService;
-    this.recipeService = recipeService;
-    this.unitOfMeasureService = unitOfMeasureService;
-  }
 
   @GetMapping("/recipe/{recipeId}/ingredients")
   public String listIngredients(@PathVariable String recipeId, Model model) {

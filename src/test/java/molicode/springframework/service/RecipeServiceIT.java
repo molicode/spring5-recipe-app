@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class RecipeServiceIT {
+class RecipeServiceIT {
 
   public static final String NEW_DESCRIPTION = "New Description";
 

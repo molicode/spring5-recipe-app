@@ -12,8 +12,20 @@ import molicode.springframework.domain.Notes;
 import molicode.springframework.domain.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class RecipeToRecipeCommandTest {
+@ExtendWith(MockitoExtension.class)
+class RecipeToRecipeCommandTest {
+
+  private final CategoryToCategoryCommand categoryToCategoryCommand;
+
+  private final IngredientToIngredientCommand ingredientToIngredientCommand;
+
+  private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
+
+  private final NotesToNotesCommand notesToNotesCommand;
 
   public static final Long RECIPE_ID = 1L;
 
@@ -43,23 +55,32 @@ public class RecipeToRecipeCommandTest {
 
   public static final Long NOTES_ID = 9L;
 
-  RecipeToRecipeCommand converter;
+  @InjectMocks
+  private RecipeToRecipeCommand converter;
+
+  public RecipeToRecipeCommandTest() {
+    this.categoryToCategoryCommand = new CategoryToCategoryCommand();
+    this.unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+    this.ingredientToIngredientCommand = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
+    this.notesToNotesCommand = new NotesToNotesCommand();
+
+  }
 
   @BeforeEach
   public void setUp() throws Exception {
     converter = new RecipeToRecipeCommand(
-        new CategoryToCategoryCommand(),
-        new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
-        new NotesToNotesCommand());
+        categoryToCategoryCommand,
+        ingredientToIngredientCommand,
+        notesToNotesCommand);
   }
 
   @Test
-  public void testNullObject() throws Exception {
+  public void testNullObject() {
     assertNull(converter.convert(null));
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     assertNotNull(converter.convert(new Recipe()));
   }
 

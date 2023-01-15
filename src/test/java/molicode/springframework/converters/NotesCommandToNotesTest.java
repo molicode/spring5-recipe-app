@@ -6,30 +6,28 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import molicode.springframework.commands.NotesCommand;
 import molicode.springframework.domain.Notes;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class NotesCommandToNotesTest {
+@ExtendWith(MockitoExtension.class)
+class NotesCommandToNotesTest {
 
   public static final Long ID_VALUE = new Long(1L);
 
   public static final String RECIPE_NOTES = "Notes";
 
-  NotesCommandToNotes converter;
-
-  @BeforeEach
-  public void setUp() throws Exception {
-    converter = new NotesCommandToNotes();
-
-  }
+  @InjectMocks
+  private NotesCommandToNotes converter;
 
   @Test
-  public void testNullParameter() throws Exception {
+  public void testNullParameter() {
     assertNull(converter.convert(null));
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     assertNotNull(converter.convert(new NotesCommand()));
   }
 

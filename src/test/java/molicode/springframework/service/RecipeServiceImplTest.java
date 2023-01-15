@@ -20,31 +20,31 @@ import molicode.springframework.domain.Recipe;
 import molicode.springframework.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class RecipeServiceImplTest {
-
-  RecipeServiceImpl recipeService;
-
-  @Mock
-  RecipeRepository recipeRepository;
+@ExtendWith(MockitoExtension.class)
+class RecipeServiceImplTest {
 
   @Mock
-  RecipeToRecipeCommand recipeToRecipeCommand;
+  private RecipeRepository recipeRepository;
 
   @Mock
-  RecipeCommandToRecipe recipeCommandToRecipe;
+  private RecipeToRecipeCommand recipeToRecipeCommand;
+
+  @Mock
+  private RecipeCommandToRecipe recipeCommandToRecipe;
+
+  private RecipeServiceImpl recipeService;
 
   @BeforeEach
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
     recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
   }
 
   @Test
-  public void getRecipeByIdTest() throws Exception {
+  public void getRecipeByIdTest() {
     Recipe recipe = new Recipe();
     recipe.setId(1L);
     Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -59,7 +59,7 @@ public class RecipeServiceImplTest {
   }
 
   @Test
-  public void getRecipeCoomandByIdTest() throws Exception {
+  public void getRecipeCoomandByIdTest() {
     Recipe recipe = new Recipe();
     recipe.setId(1L);
     Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -79,7 +79,7 @@ public class RecipeServiceImplTest {
   }
 
   @Test
-  public void getRecipesTest() throws Exception {
+  public void getRecipesTest() {
 
     Recipe recipe = new Recipe();
     HashSet receipesData = new HashSet();
@@ -95,7 +95,7 @@ public class RecipeServiceImplTest {
   }
 
   @Test
-  public void testDeleteById() throws Exception {
+  public void testDeleteById() {
 
     //given
     Long idToDelete = Long.valueOf(2L);

@@ -14,27 +14,31 @@ import molicode.springframework.domain.UnitOfMeasure;
 import molicode.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class UnitOfMeasureServiceImplTest {
+@ExtendWith(MockitoExtension.class)
+class UnitOfMeasureServiceImplTest {
 
-  UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+  private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
-  UnitOfMeasureService service;
+  private UnitOfMeasureService service;
 
   @Mock
   UnitOfMeasureRepository unitOfMeasureRepository;
 
+  public UnitOfMeasureServiceImplTest() {
+    this.unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+  }
+
   @BeforeEach
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-
     service = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
   }
 
   @Test
-  public void listAllUoms() throws Exception {
+  public void listAllUoms() {
     //given
     Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
     UnitOfMeasure uom1 = new UnitOfMeasure();

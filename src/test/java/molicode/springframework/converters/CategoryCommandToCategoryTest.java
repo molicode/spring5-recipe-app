@@ -6,30 +6,29 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import molicode.springframework.commands.CategoryCommand;
 import molicode.springframework.domain.Category;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class CategoryCommandToCategoryTest {
+@ExtendWith(MockitoExtension.class)
+class CategoryCommandToCategoryTest {
 
   public static final Long ID_VALUE = new Long(1L);
 
   public static final String DESCRIPTION = "description";
 
-  CategoryCommandToCategory conveter;
+  @InjectMocks
+  private CategoryCommandToCategory converter;
 
-  @BeforeEach
-  public void setUp() throws Exception {
-    conveter = new CategoryCommandToCategory();
+  @Test
+  public void testNullObject() {
+    assertNull(converter.convert(null));
   }
 
   @Test
-  public void testNullObject() throws Exception {
-    assertNull(conveter.convert(null));
-  }
-
-  @Test
-  public void testEmptyObject() throws Exception {
-    assertNotNull(conveter.convert(new CategoryCommand()));
+  public void testEmptyObject() {
+    assertNotNull(converter.convert(new CategoryCommand()));
   }
 
   @Test
@@ -40,7 +39,7 @@ public class CategoryCommandToCategoryTest {
     categoryCommand.setDescription(DESCRIPTION);
 
     //when
-    Category category = conveter.convert(categoryCommand);
+    Category category = converter.convert(categoryCommand);
 
     //then
     assertEquals(ID_VALUE, category.getId());

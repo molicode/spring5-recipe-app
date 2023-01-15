@@ -9,13 +9,16 @@ import java.math.BigDecimal;
 import molicode.springframework.commands.IngredientCommand;
 import molicode.springframework.commands.UnitOfMeasureCommand;
 import molicode.springframework.domain.Ingredient;
-import molicode.springframework.domain.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class IngredientCommandToIngredientTest {
+@ExtendWith(MockitoExtension.class)
+class IngredientCommandToIngredientTest {
 
-  public static final Recipe RECIPE = new Recipe();
+  private final UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;
 
   public static final BigDecimal AMOUNT = new BigDecimal("1");
 
@@ -25,20 +28,25 @@ public class IngredientCommandToIngredientTest {
 
   public static final Long UOM_ID = new Long(2L);
 
-  IngredientCommandToIngredient converter;
+  @InjectMocks
+  private IngredientCommandToIngredient converter;
+
+  public IngredientCommandToIngredientTest() {
+    this.unitOfMeasureCommandToUnitOfMeasure = new UnitOfMeasureCommandToUnitOfMeasure();
+  }
 
   @BeforeEach
   public void setUp() throws Exception {
-    converter = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
+    converter = new IngredientCommandToIngredient(unitOfMeasureCommandToUnitOfMeasure);
   }
 
   @Test
-  public void testNullObject() throws Exception {
+  public void testNullObject() {
     assertNull(converter.convert(null));
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     assertNotNull(converter.convert(new IngredientCommand()));
   }
 
@@ -66,13 +74,12 @@ public class IngredientCommandToIngredientTest {
   }
 
   @Test
-  public void convertWithNullUOM() throws Exception {
+  public void convertWithNullUOM() {
     //given
     IngredientCommand command = new IngredientCommand();
     command.setId(ID_VALUE);
     command.setAmount(AMOUNT);
     command.setDescription(DESCRIPTION);
-    UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
 
     //when
     Ingredient ingredient = converter.convert(command);
@@ -83,7 +90,6 @@ public class IngredientCommandToIngredientTest {
     assertEquals(ID_VALUE, ingredient.getId());
     assertEquals(AMOUNT, ingredient.getAmount());
     assertEquals(DESCRIPTION, ingredient.getDescription());
-
   }
 
 }

@@ -12,8 +12,20 @@ import molicode.springframework.domain.Difficulty;
 import molicode.springframework.domain.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class RecipeCommandToRecipeTest {
+@ExtendWith(MockitoExtension.class)
+class RecipeCommandToRecipeTest {
+
+  private final CategoryCommandToCategory categoryCommandToCategory;
+
+  private final UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;
+
+  private final IngredientCommandToIngredient ingredientCommandToIngredient;
+
+  private final NotesCommandToNotes notesCommandToNotes;
 
   public static final Long RECIPE_ID = 1L;
 
@@ -43,21 +55,31 @@ public class RecipeCommandToRecipeTest {
 
   public static final Long NOTES_ID = 9L;
 
-  RecipeCommandToRecipe converter;
+  public RecipeCommandToRecipeTest() {
+    this.categoryCommandToCategory = new CategoryCommandToCategory();
+    this.unitOfMeasureCommandToUnitOfMeasure = new UnitOfMeasureCommandToUnitOfMeasure();
+    this.notesCommandToNotes = new NotesCommandToNotes();
+    this.ingredientCommandToIngredient = new IngredientCommandToIngredient(unitOfMeasureCommandToUnitOfMeasure);
+  }
+
+  @InjectMocks
+  private RecipeCommandToRecipe converter;
 
   @BeforeEach
   public void setUp() throws Exception {
-    converter = new RecipeCommandToRecipe(new CategoryCommandToCategory(),
-        new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()), new NotesCommandToNotes());
+    converter = new RecipeCommandToRecipe(
+        categoryCommandToCategory,
+        ingredientCommandToIngredient,
+        notesCommandToNotes);
   }
 
   @Test
-  public void testNullObject() throws Exception {
+  public void testNullObject() {
     assertNull(converter.convert(null));
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     assertNotNull(converter.convert(new RecipeCommand()));
   }
 

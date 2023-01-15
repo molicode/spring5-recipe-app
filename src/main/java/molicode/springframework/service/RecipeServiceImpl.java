@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import molicode.springframework.commands.RecipeCommand;
 import molicode.springframework.converters.RecipeCommandToRecipe;
@@ -13,8 +14,9 @@ import molicode.springframework.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
+@AllArgsConstructor
+@Slf4j
 public class RecipeServiceImpl implements RecipeService {
 
   private final RecipeRepository recipeRepository;
@@ -22,13 +24,6 @@ public class RecipeServiceImpl implements RecipeService {
   private final RecipeCommandToRecipe recipeCommandToRecipe;
 
   private final RecipeToRecipeCommand recipeToRecipeCommand;
-
-  public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe,
-      RecipeToRecipeCommand recipeToRecipeCommand) {
-    this.recipeRepository = recipeRepository;
-    this.recipeCommandToRecipe = recipeCommandToRecipe;
-    this.recipeToRecipeCommand = recipeToRecipeCommand;
-  }
 
   @Override
   public Set<Recipe> getRecipes() {
@@ -40,9 +35,9 @@ public class RecipeServiceImpl implements RecipeService {
   }
 
   @Override
-  public Recipe findById(Long l) {
+  public Recipe findById(Long id) {
 
-    Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+    Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
     if (!recipeOptional.isPresent()) {
       throw new RuntimeException("Recipe Not Found!");
@@ -53,8 +48,8 @@ public class RecipeServiceImpl implements RecipeService {
 
   @Override
   @Transactional
-  public RecipeCommand findCommandById(Long l) {
-    return recipeToRecipeCommand.convert(findById(l));
+  public RecipeCommand findCommandById(Long id) {
+    return recipeToRecipeCommand.convert(findById(id));
   }
 
   @Override

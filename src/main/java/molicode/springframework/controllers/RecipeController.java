@@ -1,5 +1,6 @@
 package molicode.springframework.controllers;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import molicode.springframework.commands.RecipeCommand;
 import molicode.springframework.service.RecipeService;
@@ -10,15 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Slf4j
 @Controller
+@AllArgsConstructor
+@Slf4j
 public class RecipeController {
 
   private final RecipeService recipeService;
-
-  public RecipeController(RecipeService recipeService) {
-    this.recipeService = recipeService;
-  }
 
   @GetMapping("/recipe/{id}/show")
   public String showById(@PathVariable String id, Model model) {

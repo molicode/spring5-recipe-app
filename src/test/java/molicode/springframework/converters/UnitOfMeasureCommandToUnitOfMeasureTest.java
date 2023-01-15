@@ -6,30 +6,28 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import molicode.springframework.commands.UnitOfMeasureCommand;
 import molicode.springframework.domain.UnitOfMeasure;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class UnitOfMeasureCommandToUnitOfMeasureTest {
+@ExtendWith(MockitoExtension.class)
+class UnitOfMeasureCommandToUnitOfMeasureTest {
 
   public static final String DESCRIPTION = "description";
 
   public static final Long LONG_VALUE = new Long(1L);
 
-  UnitOfMeasureCommandToUnitOfMeasure converter;
-
-  @BeforeEach
-  public void setUp() throws Exception {
-    converter = new UnitOfMeasureCommandToUnitOfMeasure();
-
-  }
+  @InjectMocks
+  private UnitOfMeasureCommandToUnitOfMeasure converter;
 
   @Test
-  public void testNullParamter() throws Exception {
+  public void testNullParamter() {
     assertNull(converter.convert(null));
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     assertNotNull(converter.convert(new UnitOfMeasureCommand()));
   }
 
